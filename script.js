@@ -259,5 +259,21 @@ function addCyberEffects() {
     }
 }
 
+// Resume functions
+function downloadResume() {
+    // Create a link to download the resume
+    const link = document.createElement('a');
+    link.href = '#'; // Replace with actual resume file path
+    link.download = 'Vijaysimha_Naidu_Resume.pdf';
+    
+    // Show a message since we don't have an actual file
+    alert('Resume download feature would be implemented with an actual PDF file. Please contact me directly for my resume.');
+}
+
+function viewResume() {
+    // Open resume in new tab
+    alert('Resume viewer would open here. Please contact me directly to view my resume.');
+}
+
 // Initialize cyber effects after page load
 window.addEventListener('load', addCyberEffects);
