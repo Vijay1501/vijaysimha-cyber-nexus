@@ -550,6 +550,44 @@ section {
     box-shadow: 0 0 10px var(--primary);
 }
 
+/* Certifications Section */
+.certifications-section {
+    margin-top: 3rem;
+    padding: 2rem;
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 0.5rem;
+}
+
+.certifications-section h3 {
+    color: var(--primary);
+    text-align: center;
+    margin-bottom: 1.5rem;
+}
+
+.certifications-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+    justify-content: center;
+}
+
+.cert-item {
+    background: var(--muted);
+    color: var(--foreground);
+    padding: 0.75rem 1.5rem;
+    border-radius: 2rem;
+    border: 1px solid var(--border);
+    font-weight: 500;
+    transition: var(--transition);
+}
+
+.cert-item:hover {
+    background: var(--primary);
+    color: var(--primary-foreground);
+    box-shadow: 0 0 15px var(--primary);
+}
+
 /* Contact Section */
 .contact-section {
     background: var(--background);
