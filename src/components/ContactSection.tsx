@@ -4,6 +4,7 @@ import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
 import { useState } from 'react';
 import { toast } from 'sonner';
+import emailjs from '@emailjs/browser';
 
 export const ContactSection = () => {
   const [formData, setFormData] = useState({
@@ -13,13 +14,33 @@ export const ContactSection = () => {
     message: ''
   });
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    // Simulate form submission
-    toast("Message sent! I'll get back to you soon.", {
-      description: "Thanks for reaching out!"
-    });
-    setFormData({ name: '', email: '', subject: '', message: '' });
+    
+    try {
+      await emailjs.send(
+        'service_55fu89i',
+        'template_8vo9wbk',
+        {
+          from_name: formData.name,
+          from_email: formData.email,
+          subject: formData.subject,
+          message: formData.message,
+          to_email: 'works.vijaysimha@gmail.com'
+        },
+        '3d7k7PID_Nh9pTBSn'
+      );
+      
+      toast("Message sent successfully! I'll get back to you soon.", {
+        description: "Thanks for reaching out!"
+      });
+      setFormData({ name: '', email: '', subject: '', message: '' });
+    } catch (error) {
+      console.error('EmailJS error:', error);
+      toast("Failed to send message. Please try again later.", {
+        description: "Or contact me directly via email."
+      });
+    }
   };
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
