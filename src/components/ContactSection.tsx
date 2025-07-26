@@ -22,7 +22,9 @@ export const ContactSection = () => {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     
+    console.log('=== FORM SUBMISSION STARTED ===');
     console.log('Submitting form with data:', formData);
+    console.log('EmailJS module available:', !!emailjs);
     
     try {
       // Template parameters matching your EmailJS template exactly
