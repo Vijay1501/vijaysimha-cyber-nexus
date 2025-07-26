@@ -17,19 +17,27 @@ export const ContactSection = () => {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     
+    console.log('Submitting form with data:', formData);
+    
     try {
-      await emailjs.send(
+      const templateParams = {
+        from_name: formData.name,
+        from_email: formData.email,
+        subject: formData.subject,
+        message: formData.message,
+        to_email: 'works.vijaysimha@gmail.com'
+      };
+      
+      console.log('Sending email with params:', templateParams);
+      
+      const result = await emailjs.send(
         'service_55fu89i',
         'template_8vo9wbk',
-        {
-          from_name: formData.name,
-          from_email: formData.email,
-          subject: formData.subject,
-          message: formData.message,
-          to_email: 'works.vijaysimha@gmail.com'
-        },
+        templateParams,
         '3d7k7PID_Nh9pTBSn'
       );
+      
+      console.log('EmailJS result:', result);
       
       toast("Message sent successfully! I'll get back to you soon.", {
         description: "Thanks for reaching out!"
