@@ -11,6 +11,7 @@ export const ContactSection = () => {
   useEffect(() => {
     emailjs.init('3d7k7PID_Nh9pTBSn');
   }, []);
+  
   const [formData, setFormData] = useState({
     name: '',
     email: '',
@@ -24,15 +25,15 @@ export const ContactSection = () => {
     console.log('Submitting form with data:', formData);
     
     try {
+      // Template parameters matching your EmailJS template exactly
       const templateParams = {
-        from_name: formData.name,
-        from_email: formData.email,
-        subject: formData.subject,
-        message: formData.message,
-        to_email: 'works.vijaysimha@gmail.com'
+        name: formData.name,        // matches {{name}} in template
+        email: formData.email,      // matches {{email}} in template  
+        title: formData.subject,    // matches {{title}} in template
+        message: formData.message,  // matches {{message}} in template
       };
       
-      console.log('Sending email with params:', templateParams);
+      console.log('Sending email with template params:', templateParams);
       
       const result = await emailjs.send(
         'service_55fu89i',
@@ -41,14 +42,14 @@ export const ContactSection = () => {
         '3d7k7PID_Nh9pTBSn'
       );
       
-      console.log('EmailJS result:', result);
+      console.log('EmailJS success result:', result);
       
       toast("Message sent successfully! I'll get back to you soon.", {
         description: "Thanks for reaching out!"
       });
       setFormData({ name: '', email: '', subject: '', message: '' });
     } catch (error) {
-      console.error('EmailJS error:', error);
+      console.error('EmailJS error details:', error);
       toast("Failed to send message. Please try again later.", {
         description: "Or contact me directly via email."
       });
