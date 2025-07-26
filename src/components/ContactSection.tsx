@@ -2,11 +2,15 @@ import { Card, CardContent } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { toast } from 'sonner';
 import emailjs from '@emailjs/browser';
 
 export const ContactSection = () => {
+  // Initialize EmailJS
+  useEffect(() => {
+    emailjs.init('3d7k7PID_Nh9pTBSn');
+  }, []);
   const [formData, setFormData] = useState({
     name: '',
     email: '',
