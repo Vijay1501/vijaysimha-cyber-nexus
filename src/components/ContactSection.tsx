@@ -1,69 +1,9 @@
 import { Card, CardContent } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
-import { Input } from '@/components/ui/input';
-import { Textarea } from '@/components/ui/textarea';
-import { useState, useEffect } from 'react';
 import { toast } from 'sonner';
-import emailjs from '@emailjs/browser';
+import purdueLogoUrl from '@/assets/purdue-logo.png';
 
 export const ContactSection = () => {
-  // Initialize EmailJS
-  useEffect(() => {
-    emailjs.init('3d7k7PID_Nh9pTBSn');
-  }, []);
-  
-  const [formData, setFormData] = useState({
-    name: '',
-    email: '',
-    subject: '',
-    message: ''
-  });
-
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-    
-    console.log('=== FORM SUBMISSION STARTED ===');
-    console.log('Submitting form with data:', formData);
-    console.log('EmailJS module available:', !!emailjs);
-    
-    try {
-      // Template parameters matching your EmailJS template exactly
-      const templateParams = {
-        name: formData.name,        // matches {{name}} in template
-        email: formData.email,      // matches {{email}} in template  
-        title: formData.subject,    // matches {{title}} in template
-        message: formData.message,  // matches {{message}} in template
-      };
-      
-      console.log('Sending email with template params:', templateParams);
-      
-      const result = await emailjs.send(
-        'service_55fu89i',
-        'template_8vo9wbk',
-        templateParams,
-        '3d7k7PID_Nh9pTBSn'
-      );
-      
-      console.log('EmailJS success result:', result);
-      
-      toast("Message sent successfully! I'll get back to you soon.", {
-        description: "Thanks for reaching out!"
-      });
-      setFormData({ name: '', email: '', subject: '', message: '' });
-    } catch (error) {
-      console.error('EmailJS error details:', error);
-      toast("Failed to send message. Please try again later.", {
-        description: "Or contact me directly via email."
-      });
-    }
-  };
-
-  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
-    setFormData({
-      ...formData,
-      [e.target.name]: e.target.value
-    });
-  };
 
   const contactInfo = [
     {
@@ -105,99 +45,50 @@ export const ContactSection = () => {
           </p>
         </div>
 
-        <div className="grid lg:grid-cols-2 gap-12">
-          {/* Contact Form */}
-          <Card className="bg-card/50 backdrop-blur border-primary/30 shadow-neon">
-            <CardContent className="p-8">
-              <h3 className="text-2xl font-bold font-mono text-secondary mb-6 flex items-center">
-                <span className="text-accent mr-2">&gt;</span> Send Message
-              </h3>
-              
-              <form onSubmit={handleSubmit} className="space-y-6">
-                <div className="grid md:grid-cols-2 gap-4">
-                  <div>
-                    <label className="text-sm font-mono text-accent mb-2 block">Name:</label>
-                    <Input
-                      name="name"
-                      value={formData.name}
-                      onChange={handleInputChange}
-                      placeholder="Your Name"
-                      className="bg-input/50 border-primary/30 focus:border-primary text-foreground placeholder:text-muted-foreground font-mono"
-                      required
-                    />
-                  </div>
-                  <div>
-                    <label className="text-sm font-mono text-accent mb-2 block">Email:</label>
-                    <Input
-                      name="email"
-                      type="email"
-                      value={formData.email}
-                      onChange={handleInputChange}
-                      placeholder="your.email@domain.com"
-                      className="bg-input/50 border-primary/30 focus:border-primary text-foreground placeholder:text-muted-foreground font-mono"
-                      required
-                    />
-                  </div>
-                </div>
-                
-                <div>
-                  <label className="text-sm font-mono text-accent mb-2 block">Subject:</label>
-                  <Input
-                    name="subject"
-                    value={formData.subject}
-                    onChange={handleInputChange}
-                    placeholder="What's this about?"
-                    className="bg-input/50 border-primary/30 focus:border-primary text-foreground placeholder:text-muted-foreground font-mono"
-                    required
-                  />
-                </div>
-                
-                <div>
-                  <label className="text-sm font-mono text-accent mb-2 block">Message:</label>
-                  <Textarea
-                    name="message"
-                    value={formData.message}
-                    onChange={handleInputChange}
-                    placeholder="Your message here..."
-                    rows={6}
-                    className="bg-input/50 border-primary/30 focus:border-primary text-foreground placeholder:text-muted-foreground font-mono resize-none"
-                    required
-                  />
-                </div>
-                
-                <Button
-                  type="submit"
-                  className="w-full bg-primary hover:bg-primary/90 text-primary-foreground shadow-neon transition-all duration-300 hover:shadow-secondary-glow font-mono"
-                >
-                  &gt; Send Message
-                </Button>
-              </form>
-            </CardContent>
-          </Card>
+        {/* Purdue Logo */}
+        <div className="text-center mb-8">
+          <div className="flex items-center justify-center gap-4 mb-4">
+            <img 
+              src={purdueLogoUrl} 
+              alt="Purdue University" 
+              className="h-12 w-auto animate-pulse"
+            />
+            <div className="w-1 h-12 bg-gradient-primary rounded-full animate-pulse"></div>
+            <div className="text-left">
+              <p className="text-lg font-bold font-mono text-primary">Purdue University</p>
+              <p className="text-sm font-mono text-accent">Cybersecurity Student</p>
+            </div>
+          </div>
+        </div>
 
-          {/* Contact Info */}
-          <div className="space-y-8">
-            <Card className="bg-card/50 backdrop-blur border-primary/30 shadow-neon">
+        <div className="max-w-4xl mx-auto">
+          {/* Contact Info Grid */}
+          <div className="grid md:grid-cols-2 gap-8 mb-12">
+            <Card className="bg-card/50 backdrop-blur border-primary/30 shadow-neon transform hover:scale-105 transition-all duration-500">
               <CardContent className="p-8">
                 <h3 className="text-2xl font-bold font-mono text-secondary mb-6 flex items-center">
-                  <span className="text-accent mr-2">&gt;</span> Contact Info
+                  <span className="text-accent mr-2 animate-pulse">&gt;</span> Contact Info
                 </h3>
                 
                 <div className="space-y-4">
-                  {contactInfo.map((info, index) => (
+                  {contactInfo.slice(0, 2).map((info, index) => (
                     <div 
                       key={index}
-                      className="flex items-center p-4 bg-muted/20 rounded-lg border border-primary/20 hover:border-primary/50 cursor-pointer transition-all duration-300 hover:bg-primary/5 group"
+                      className="flex items-center p-4 bg-gradient-to-r from-muted/20 to-primary/10 rounded-lg border border-primary/20 hover:border-primary/70 cursor-pointer transition-all duration-500 hover:bg-primary/10 group hover:shadow-neon transform hover:scale-105"
                       onClick={info.action}
+                      style={{ animationDelay: `${index * 0.2}s` }}
                     >
-                      <div className="text-2xl mr-4 group-hover:animate-bounce">
+                      <div className="text-3xl mr-4 group-hover:animate-bounce transition-transform duration-300 group-hover:scale-125">
                         {info.icon}
                       </div>
-                      <div>
-                        <p className="text-sm font-mono text-accent">{info.label}:</p>
-                        <p className="text-foreground font-mono group-hover:text-primary transition-colors duration-300">
+                      <div className="flex-1">
+                        <p className="text-sm font-mono text-accent mb-1">{info.label}:</p>
+                        <p className="text-foreground font-mono group-hover:text-primary transition-colors duration-300 text-lg">
                           {info.value}
                         </p>
+                      </div>
+                      <div className="opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                        <span className="text-primary font-mono">&gt;</span>
                       </div>
                     </div>
                   ))}
@@ -205,33 +96,67 @@ export const ContactSection = () => {
               </CardContent>
             </Card>
 
+            <Card className="bg-card/50 backdrop-blur border-primary/30 shadow-neon transform hover:scale-105 transition-all duration-500">
+              <CardContent className="p-8">
+                <h3 className="text-2xl font-bold font-mono text-secondary mb-6 flex items-center">
+                  <span className="text-accent mr-2 animate-pulse">&gt;</span> Social Links
+                </h3>
+                
+                <div className="space-y-4">
+                  {contactInfo.slice(2).map((info, index) => (
+                    <div 
+                      key={index}
+                      className="flex items-center p-4 bg-gradient-to-r from-muted/20 to-secondary/10 rounded-lg border border-secondary/20 hover:border-secondary/70 cursor-pointer transition-all duration-500 hover:bg-secondary/10 group hover:shadow-secondary-glow transform hover:scale-105"
+                      onClick={info.action}
+                      style={{ animationDelay: `${(index + 2) * 0.2}s` }}
+                    >
+                      <div className="text-3xl mr-4 group-hover:animate-bounce transition-transform duration-300 group-hover:scale-125">
+                        {info.icon}
+                      </div>
+                      <div className="flex-1">
+                        <p className="text-sm font-mono text-accent mb-1">{info.label}:</p>
+                        <p className="text-foreground font-mono group-hover:text-secondary transition-colors duration-300 text-lg">
+                          {info.value}
+                        </p>
+                      </div>
+                      <div className="opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                        <span className="text-secondary font-mono">&gt;</span>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </CardContent>
+            </Card>
+          </div>
+
+          {/* Enhanced Status and Resume Section */}
+          <div className="grid md:grid-cols-2 gap-8">
             {/* Status Card */}
-            <Card className="bg-gradient-primary p-1 rounded-lg shadow-secondary-glow">
+            <Card className="bg-gradient-primary p-1 rounded-lg shadow-secondary-glow transform hover:scale-105 transition-all duration-500 animate-pulse">
               <div className="bg-background rounded-lg p-6 text-center">
                 <h3 className="text-xl font-bold font-mono text-primary mb-3">
                   &gt; Current Status
                 </h3>
                 <div className="flex items-center justify-center mb-3">
-                  <div className="w-3 h-3 bg-accent rounded-full animate-pulse mr-2"></div>
-                  <span className="text-accent font-mono">Available for opportunities</span>
+                  <div className="w-4 h-4 bg-accent rounded-full animate-ping mr-2"></div>
+                  <span className="text-accent font-mono text-lg">Available for opportunities</span>
                 </div>
-                <p className="text-muted-foreground text-sm">
+                <p className="text-muted-foreground">
                   Open to cybersecurity internships, research projects, and collaboration opportunities
                 </p>
               </div>
             </Card>
 
             {/* Resume Download */}
-            <Card className="bg-card/50 backdrop-blur border-primary/30 shadow-neon">
+            <Card className="bg-card/50 backdrop-blur border-primary/30 shadow-neon transform hover:scale-105 transition-all duration-500">
               <CardContent className="p-6 text-center">
-                <h3 className="text-lg font-bold font-mono text-secondary mb-4">
+                <h3 className="text-xl font-bold font-mono text-secondary mb-4">
                   &gt; Resume
                 </h3>
                 <Button
                   variant="outline"
-                  className="border-secondary text-secondary hover:bg-secondary hover:text-secondary-foreground shadow-secondary-glow transition-all duration-300 font-mono"
+                  className="border-secondary text-secondary hover:bg-secondary hover:text-secondary-foreground shadow-secondary-glow transition-all duration-500 font-mono transform hover:scale-110 hover:rotate-1"
                   onClick={() => {
-                    // In a real app, this would download the actual resume
                     toast("Resume download started!", {
                       description: "vijaysimha-naidu-resume.pdf"
                     });
